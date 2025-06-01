@@ -3,7 +3,7 @@
 
 A multi-agent AI system that accepts inputs in PDF, JSON, or Email formats, automatically classifies both the format and the intent, and routes them to specialized agents for downstream processing.
 
-> The system must maintain shared context (e.g., sender, topic, last extracted fields) to enable chaining and traceability.
+> The system maintains shared context (e.g., sender, topic, last extracted fields) via memory implimentations using redis to enable chaining and traceability.
 
 ## What It Does
 
@@ -22,15 +22,26 @@ This system is composed of three core agents, orchestrated via a central Classif
 #### 2. Email Agent
 - Processes unstructured email inputs
 - Extracts:
-  - Sender
+  - Sender Info
   - Intent
   - Urgency
+  - Received_timestamp
+  - Subject 
 - Converts to CRM-style structured format
 - Updates shared Redis memory to support chained workflows
 
 #### 3. JSON Agent
 - Accepts structured JSON payloads
 - Extracts data and reformats it to a target schema
+  "customer_id": string,
+  "full_name": string,
+  "email": string,
+  "phone": string,
+  "request_type": one of ["invoice", "complaint", "rfq", "regulation", "other"],
+  "details": string,
+  "priority": one of ["low", "medium", "high"],
+  "received_timestamp": string
+  "anomalies": string
 - Flags:
   - Missing fields
   - Field mismatches or anomalies
