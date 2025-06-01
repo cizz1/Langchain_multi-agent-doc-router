@@ -136,7 +136,7 @@ for log in logs:
 
 ## System Architecture
 
-![Architecture Diagram Placeholder](./assets/architecture.png)
+![Architecture Diagram Placeholder](./assets/architecture1.png)
 
 ## Logs Screenshot
 
