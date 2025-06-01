@@ -1,0 +1,28 @@
+{
+  "invoice_id": "INV-98473",
+  "date": "2025-05-22",
+  "sender": {
+    "name": "TechParts Inc.",
+    "email": "billing@techparts.com"
+  },
+  "recipient": {
+    "name": "Aegis Robotics",
+    "email": "accounts@aegisrobotics.io"
+  },
+  "items": [
+    {
+      "description": "Servo Motor X12",
+      "quantity": 10,
+      "unit_price": 89.99
+    },
+    {
+      "description": "Control Unit v2",
+      "quantity": 2,
+      "unit_price": 230.00
+    }
+  ],
+  "total_amount": 1319.90,
+  "currency": "USD",
+  "due_date": "2025-06-05",
+  "notes": "Please make the payment before the due date to avoid late fees."
+}

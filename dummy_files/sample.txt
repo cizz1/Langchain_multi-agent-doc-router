@@ -1,0 +1,14 @@
+Subject: Follow-up on Invoice INV-1001
+
+Dear Support,
+
+I hope this email finds you well. I am writing to follow up on the invoice INV-1001 that was sent to us on May 28th. We noticed a discrepancy in the total amount due.
+
+The invoice mentions a subtotal of 20,000 and tax of 1,800, but the total is listed as 21,800. Could you please confirm if this is accurate, and also share the due date and payment terms again?
+
+Looking forward to your clarification.
+
+Best regards,  
+Jessica Greene  
+Acme Corporation  
+billing@acme.com

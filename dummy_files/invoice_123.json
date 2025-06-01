@@ -1,0 +1,25 @@
+{
+  "invoice_id": "INV-1001",
+  "date": "2024-05-28",
+  "customer_name": "Acme Corporation",
+  "customer_email": "billing@acme.com",
+  "items": [
+    {
+      "description": "AI Consulting Services",
+      "quantity": 10,
+      "unit_price": 1500,
+      "total_price": 15000
+    },
+    {
+      "description": "Custom LLM Fine-tuning",
+      "quantity": 1,
+      "unit_price": 5000,
+      "total_price": 5000
+    }
+  ],
+  "subtotal": 20000,
+  "tax": 1800,
+  "total_amount": 21800,
+  "payment_terms": "Net 30",
+  "due_date": "2024-06-27"
+}

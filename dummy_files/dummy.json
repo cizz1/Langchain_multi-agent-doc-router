@@ -1,0 +1,14 @@
+{
+  "invoice_id": "INV-1001",
+  "date": "2024-05-28",
+  "customer_name": "Acme Corporation",
+  "customer_email": "billing@acme.com",
+  "items": [
+    {
+      "description": "AI Consulting Services",
+      "quantity": 10,
+      "unit_price": 1500,
+      "total_price": 15000
+    }]
+
+  }
