@@ -3,7 +3,7 @@
 
 A multi-agent AI system that accepts inputs in PDF, JSON, or Email formats, automatically classifies both the format and the intent, and routes them to specialized agents for downstream processing.
 
-> The system maintains shared context (e.g., sender, topic, last extracted fields) via memory implimentations using redis to enable chaining and traceability.
+> The system must maintain shared context (e.g., sender, topic, last extracted fields) to enable chaining and traceability.
 
 ## What It Does
 
@@ -22,30 +22,33 @@ This system is composed of three core agents, orchestrated via a central Classif
 #### 2. Email Agent
 - Processes unstructured email inputs
 - Extracts:
-  - Sender Info
+  - Sender
   - Intent
   - Urgency
-  - Received_timestamp
-  - Subject 
 - Converts to CRM-style structured format
 - Updates shared Redis memory to support chained workflows
 
 #### 3. JSON Agent
 - Accepts structured JSON payloads
 - Extracts data and reformats it to a target schema:
+
 ```json
-  "customer_id": string,
-  "full_name": string,
-  "email": string,
-  "phone": string,
-  "request_type": one of ["invoice", "complaint", "rfq", "regulation", "other"],
-  "details": string,
-  "priority": one of ["low", "medium", "high"],
-  "received_timestamp": string
-  "anomalies": string
+{
+  "customer_id": "string",
+  "full_name": "string",
+  "email": "string",
+  "phone": "string",
+  "request_type": "one of ['invoice', 'complaint', 'rfq', 'regulation', 'other']",
+  "details": "string",
+  "priority": "one of ['low', 'medium', 'high']",
+  "received_timestamp": "string",
+  "anomalies": "string"
+}
+```
+
 - Flags:
-  - Missing fields
-  - Field mismatches or anomalies
+  - Missing fields  
+  - Field mismatches or anomalies  
 - Writes outputs and anomalies to shared context
 
 ## Shared Memory Module (Redis)
@@ -58,33 +61,33 @@ All agents interact with a central Redis store that:
 
 Logs are stored under Redis keys like:
 ```
-log:<file_id>:classifier: {logged_content}
-log:<file_id>:email_agent: {logged_content}
-log:<file_id>:json_agent: {logged_content}
+log:<file_id>:classifier
+log:<file_id>:email_agent
+log:<file_id>:json_agent
 ```
 
 ## Setup Instructions
 
 ### 1. Clone and Prepare
-```
+```bash
 git clone https://github.com/<your-username>/multi-agent-input-router.git
 cd multi-agent-input-router
 ```
 
 ### 2. Create `.env` File
 Inside the root directory, create a `.env` file and add:
-```
+```env
 GOOGLE_API_KEY=your_gemini_api_key
 LANGCHAIN_API_KEY=your_langsmith_api_key
 ```
 
 ### 3. Install Dependencies
-```
+```bash
 pip install -r requirements.txt
 ```
 
 ### 4. Start Redis (Via Docker)
-```
+```bash
 docker run -d -p 6789:6379 --name redis-server redis
 ```
 
@@ -94,7 +97,7 @@ Redis will run on `localhost:6789` and serve as the shared memory backend for al
 Place all your input files (`.json`, `.pdf`, `.txt`) into the `dummy_dir/` folder.
 
 ### 6. Run the Agent System
-```
+```bash
 python agent.py
 ```
 
@@ -106,7 +109,7 @@ LangSmith allows deep tracing and debugging of agent flows.
 - Go to https://smith.langchain.com/
 - Get your tracing API key
 - Add to your `.env`:
-```
+```env
 LANGCHAIN_API_KEY=your_langsmith_api_key
 LANGCHAIN_PROJECT=multi-agent-router
 LANGCHAIN_TRACING_V2=true
@@ -122,7 +125,7 @@ log:<filename>:json_agent
 ```
 
 You can view logs manually using:
-```
+```python
 import redis, json
 
 r = redis.Redis(host='localhost', port=6789, decode_responses=True)
@@ -137,7 +140,7 @@ for log in logs:
 
 ## Logs Screenshot
 
-Here’s a sample of how Redis logs look per file:
+Here's a sample of how Redis logs look per file:
 
 ![Logs UI Placeholder](./assets/logs.png)
 
@@ -146,10 +149,13 @@ Here’s a sample of how Redis logs look per file:
 ```
 multi-agent-input-router/
 ├── dummy_dir/           # Input files directory
+├── agents/
+│   ├── classifier_agent.py
+│   ├── email_agent.py
+│   └── json_agent.py
+├── shared_memory/
+│   └── redis_client.py
 ├── agent.py             # Main entrypoint
-├── prompts.py 
-├── tools_custom.py 
-├── tools_utils.py
 ├── requirements.txt
 ├── .env
 └── README.md
@@ -158,9 +164,8 @@ multi-agent-input-router/
 ## Acknowledgements
 
 - OpenAI & Gemini for LLM APIs
-- Redis for fast in-memory data storage
+- Redis for fast in-memory data storage and logging.
 - LangSmith for powerful tracing and visualization
 
-## Questions or Contributions?
 
-Feel free to open issues or pull requests.
+
