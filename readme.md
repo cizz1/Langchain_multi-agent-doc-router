@@ -32,7 +32,8 @@ This system is composed of three core agents, orchestrated via a central Classif
 
 #### 3. JSON Agent
 - Accepts structured JSON payloads
-- Extracts data and reformats it to a target schema
+- Extracts data and reformats it to a target schema:
+```json
   "customer_id": string,
   "full_name": string,
   "email": string,
